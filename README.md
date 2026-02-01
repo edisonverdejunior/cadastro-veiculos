@@ -2,11 +2,23 @@
 
 Uma API REST desenvolvida em .NET 8 para cadastro e consulta de veículos, com autenticação JWT e gerenciamento de usuários.
 
-## Como Executar a Solução
+## Características
 
+- .NET 8
+- ASP.NET Core Web API com Controllers
+- Autenticação e Autorização com JWT
+- Entity Framework Core InMemory
+- MediatR para CQRS (Commands e Queries)
+- FluentValidation para validações
+- OpenAPI/Swagger
+- BCrypt para hash de senha
+- Arquitetura em camadas (Domain, Application, Infra, WebApi)
+
+## Como Executar a Solução
 ### Pré-requisitos
+
 - .NET 8 SDK instalado
-- Visual Studio ou Visual Studio Code
+- Visual Studio 2022 ou VS Code (opcional)
 
 ### Passos
 
@@ -36,6 +48,15 @@ dotnet run
 ---
 
 ## Autenticação - Cadastro e Login
+
+### Usuários Pré-cadastrados
+
+A aplicação já vem com dois usuários de exemplo:
+
+| Login    | Senha      | Descrição          |
+|----------|------------|-------------------|
+| admin    | Admin@123  | Usuário administrador |
+| usuario  | User@123   | Usuário padrão    |
 
 ### 1. Cadastrar Novo Usuário
 
@@ -138,14 +159,26 @@ dotnet run
 }
 ```
 
-**Valores para Marca (enum):**
-- 1 = Toyota
-- 2 = Honda
-- 3 = Ford
-- 4 = Volkswagen
-- 5 = Chevrolet
-- 6 = Fiat
-- 7 = Hyundai
+## Tabela de Marcas (Enum)
+
+| Código | Marca      |
+|--------|-----------|
+| 1      | Toyota    |
+| 2      | Honda     |
+| 3      | Hyundai   |
+| 4      | Volkswagen|
+| 5      | Chevrolet |
+| 6      | Ford      |
+| 7      | BMW       |
+| 8      | Mercedes  |
+| 9      | Audi      |
+| 10     | Fiat      |
+| 11     | Renault   |
+| 12     | Peugeot   |
+| 13     | Nissan    |
+| 14     | Kia       |
+| 15     | Jeep      |
+
 
 #### Atualizar Veículo (PUT /api/veiculos/{id})
 ```json
@@ -165,6 +198,7 @@ Retorna um veículo específico por ID.
 Retorna a lista de todos os veículos cadastrados.
 
 ---
+
 
 ## Notas Importantes
 
