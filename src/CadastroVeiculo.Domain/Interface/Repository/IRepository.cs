@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace CadastroVeiculo.Domain.Interface.Repository
+﻿namespace CadastroVeiculo.Domain.Interface.Repository
 {
     public interface IRepository<TEntity> : IDisposable where TEntity : class
     {

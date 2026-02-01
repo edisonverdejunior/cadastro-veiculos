@@ -34,13 +34,17 @@ public class UsuariosController : ControllerBase
             var result = await _mediator.Send(command);
             return CreatedAtAction(nameof(ObterPorId), new { id = result.Id }, result);
         }
-        catch (FluentValidation.ValidationException ex)
+        catch (FluentValidation.ValidationException ex) when (ex.Message.Contains("Login já existe"))
+        {
+            return BadRequest(new { message = "Login já existe" });
+        }
+        catch (FluentValidation.ValidationException ex) 
         {
             return BadRequest(new { errors = ex.Errors.Select(e => e.ErrorMessage) });
         }
-        catch (Exception ex) when (ex.Message.Contains("Login já existe"))
+        catch (Exception ex) 
         {
-            return BadRequest(new { message = "Login já existe" });
+            return BadRequest(new { message = ex.Message });
         }
     }
 

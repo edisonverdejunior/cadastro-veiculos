@@ -1,5 +1,4 @@
-﻿
-using CadastroVeiculo.Domain.Interface.Service;
+﻿using CadastroVeiculo.Domain.Interface.Service;
 using CadastroVeiculos.Application.Features.Usuarios.Queries;
 using MediatR;
 

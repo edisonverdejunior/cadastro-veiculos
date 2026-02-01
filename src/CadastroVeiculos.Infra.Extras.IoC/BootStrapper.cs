@@ -1,11 +1,13 @@
 ﻿using CadastroVeiculo.Domain.Interface.Repository;
 using CadastroVeiculo.Domain.Interface.Service;
 using CadastroVeiculo.Domain.Service;
+using CadastroVeiculos.Application;
 using CadastroVeiculos.Application.Validators;
 using CadastroVeiculos.Infra.Data.Context;
 using CadastroVeiculos.Infra.Data.Repository;
 using CadastroVeiculos.Infra.Extras.UoW;
 using FluentValidation;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,7 +21,8 @@ namespace CadastroVeiculos.Infra.Extras.IoC
             RegisterContext(services);
             RegisterDomainServices(services);
             RegisterRepositories(services);
-            RegisterVaidators(services);
+            RegisterValidators(services);
+            RegisterMediatRHandlers(services);
         }
 
         private static void RegisterDomainServices(IServiceCollection services)
@@ -40,10 +43,18 @@ namespace CadastroVeiculos.Infra.Extras.IoC
             services.AddDbContext<CadastroVeiculosContext>(options => options.UseInMemoryDatabase("CadastroVeiculosDb"));
         }
 
-        private static void RegisterVaidators(IServiceCollection services)
+        private static void RegisterValidators(IServiceCollection services)
         {
             services.AddScoped<IValidator<(string nome, string login, string senha)>, CadastrarUsuarioValidator>();
             services.AddScoped<IValidator<(string descricao, int marca, string modelo, string? opcionais, decimal? valor)>, CadastrarVeiculoValidator>();
+        }
+
+        private static void RegisterMediatRHandlers(IServiceCollection services)
+        {
+            services.AddMediatR(cfg =>
+            {
+                cfg.RegisterServicesFromAssemblyContaining(typeof(AssemblyReference));
+            });
         }
     }
 }

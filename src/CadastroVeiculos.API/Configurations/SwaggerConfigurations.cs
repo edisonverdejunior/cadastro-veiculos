@@ -9,16 +9,20 @@ namespace CadastroVeiculos.API.Configurations
         {
             services.AddSwaggerGen(option =>
             {
-                option.SwaggerDoc("v1", new OpenApiInfo { Title = "Cadastro de Veículos API", Version = "v1" });
+                option.SwaggerDoc("v1", new OpenApiInfo { 
+                    Title = "Cadastro de Veículos API", 
+                    Version = "v1", 
+                    Description = "API para cadastro de veículos"
+                });
 
                 var jwtSecurityScheme = new OpenApiSecurityScheme
                 {
                     BearerFormat = "JWT",
                     Name = "JWT Authentication",
                     In = ParameterLocation.Header,
-                    Type = SecuritySchemeType.ApiKey,
+                    Type = SecuritySchemeType.Http,
                     Scheme = JwtBearerDefaults.AuthenticationScheme,
-                    Description = "Insira JWT com 'Bearer' no campo, exemplo: Bearer {seu token}",
+                    Description = "Informe **_SOMENTE_** o seu JWT Bearer token na caixa de texto abaixo!",
 
                     Reference = new OpenApiReference
                     {
