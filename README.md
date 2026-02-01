@@ -18,7 +18,7 @@ Uma API REST desenvolvida em .NET 8 para cadastro e consulta de veículos, com au
 ### Pré-requisitos
 
 - .NET 8 SDK instalado
-- Visual Studio 2022 ou VS Code (opcional)
+- Visual Studio 2026 ou VS Code (opcional)
 
 ### Passos
 
