@@ -1,0 +1,21 @@
+<Solution>
+  <Folder Name="/1 - WebApi/">
+    <Project Path="src/CadastroVeiculos.API/CadastroVeiculos.API.csproj" />
+  </Folder>
+  <Folder Name="/2 - Application/">
+    <Project Path="src/CadastroVeiculos.Application/CadastroVeiculos.Application.csproj" Id="0be329d2-4031-4060-9e7c-54b0a9f5f35b" />
+  </Folder>
+  <Folder Name="/3 - Domain/">
+    <Project Path="src/CadastroVeiculo.Domain/CadastroVeiculo.Domain.csproj" Id="b598644f-3ec1-4520-85cd-ca67bd0dddbd" />
+  </Folder>
+  <Folder Name="/4 - Infra/" />
+  <Folder Name="/4 - Infra/4.1 - Data/">
+    <Project Path="src/CadastroVeiculos.Infra.Data/CadastroVeiculos.Infra.Data.csproj" Id="edd4d835-56c0-4d91-b531-f129ea8207b6" />
+  </Folder>
+  <Folder Name="/4 - Infra/4.2 - Extras/">
+    <Project Path="src/CadastroVeiculos.Infra.Extras.Configurations/CadastroVeiculos.Infra.Extras.Configurations.csproj" Id="aade0a62-78ca-4ce1-a20b-44141bd0fc55" />
+    <Project Path="src/CadastroVeiculos.Infra.Extras.IoC/CadastroVeiculos.Infra.Extras.IoC.csproj" Id="6f5b753d-c659-457c-b4d3-79713eff4501" />
+    <Project Path="src/CadastroVeiculos.Infra.Extras.UoW/CadastroVeiculos.Infra.Extras.UoW.csproj" Id="7a6dc6e1-87b2-44f8-a8db-d6090a167fa3" />
+    <Project Path="src/CadastroVeiculos.Infra.Extras/CadastroVeiculos.Infra.Extras.csproj" Id="4f946912-c66b-482e-9ff2-27d6b8f95ea0" />
+  </Folder>
+</Solution>
