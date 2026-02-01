@@ -1,4 +1,6 @@
 ﻿using CadastroVeiculos.Infra.Extras.Configurations;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -29,6 +31,31 @@ namespace CadastroVeiculos.Infra.Extras.JWT
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public static void AddJwtAuthentication(this IServiceCollection services)
+        {
+            var jwtKey = Config.GetSectionValue("Jwt", "Key");
+            var jwtIssuer = Config.GetSectionValue("Jwt", "Issuer");
+            var jwtAudience = Config.GetSectionValue("Jwt", "Audience");
+
+            if (!string.IsNullOrWhiteSpace(jwtKey))
+            {
+                services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                    .AddJwtBearer(options =>
+                    {
+                        options.TokenValidationParameters = new TokenValidationParameters
+                        {
+                            ValidateIssuer = true,
+                            ValidateAudience = true,
+                            ValidateLifetime = true,
+                            ValidateIssuerSigningKey = true,
+                            ValidIssuer = jwtIssuer,
+                            ValidAudience = jwtAudience,
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+                        };
+                    });
+            }
         }
     }
 }
