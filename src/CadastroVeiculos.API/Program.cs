@@ -1,4 +1,5 @@
 using CadastroVeiculos.API.Configurations;
+using CadastroVeiculos.API.Middlewares;
 using CadastroVeiculos.Infra.Data.Context;
 using CadastroVeiculos.Infra.Extras.IoC;
 using CadastroVeiculos.Infra.Extras.JWT;
@@ -14,6 +15,17 @@ builder.Services.AddAuthorization();
 
 builder.Services.RegisterAllDependencies();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllowAnyOriginAnyMethod",
+        policy =>
+        {
+            policy.AllowAnyOrigin()
+                  .AllowAnyMethod()
+                  .AllowAnyHeader();
+        });
+});
+
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -23,6 +35,8 @@ using (var scope = app.Services.CreateScope())
 }
 
 // Configure the HTTP request pipeline.
+app.UseMiddleware<ExceptionMiddleware>();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -36,7 +50,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
-
+app.UseCors("AllowAnyOriginAnyMethod");
 app.MapControllers();
 
-app.Run();
+app.Run("http://0.0.0.0:5217");

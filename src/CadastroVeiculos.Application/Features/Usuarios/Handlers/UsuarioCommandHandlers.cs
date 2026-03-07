@@ -94,6 +94,11 @@ public class ExcluirUsuarioHandler : IRequestHandler<ExcluirUsuarioCommand, bool
         if (usuario == null)
             throw new KeyNotFoundException($"Usuário com id {request.Id} não encontrado");
 
+        if (usuario.Login == "admin")
+        {
+            return false;
+        }
+
         await _usuarioService.Delete(usuario);
         await _unitOfWork.CommitAsync();
         return true;
