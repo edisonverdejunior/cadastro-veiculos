@@ -9,6 +9,15 @@ public class ObterVeiculoPorIdQuery : IRequest<ObterVeiculoResponse?>
 
 public class ListarVeiculosQuery : IRequest<IEnumerable<ListarVeiculoResponse>>
 {
+
+}
+
+public class BuscarVeiculosQuery : IRequest<IEnumerable<ListarVeiculoResponse>>
+{
+    public string? Descricao { get; set; }
+    public int? Marca { get; set; }
+    public string? Modelo { get; set; }
+    public string? Opcionais { get; set; }
 }
 
 public class ObterVeiculoResponse

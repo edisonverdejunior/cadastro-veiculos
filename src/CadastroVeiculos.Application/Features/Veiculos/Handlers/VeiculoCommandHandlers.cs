@@ -79,7 +79,7 @@ public class AtualizarVeiculoHandler : IRequestHandler<AtualizarVeiculoCommand, 
         veiculo.Valor = request.Valor;
 
         var veiculoAtualizado = await _veiculoService.AtualizarAsync(veiculo);
-
+    
         await _unitOfWork.CommitAsync();
 
         return new AtualizarVeiculoResponse

@@ -70,6 +70,26 @@ public class VeiculosController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("buscar")]
+    [ProducesResponseType(typeof(IEnumerable<ListarVeiculoResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    public async Task<ActionResult<IEnumerable<ListarVeiculoResponse>>> Buscar(
+        [FromQuery] string? descricao,
+        [FromQuery] int? marca,
+        [FromQuery] string? modelo,
+        [FromQuery] string? opcionais)
+    {
+        var query = new BuscarVeiculosQuery
+        {
+            Descricao = descricao,
+            Marca = marca,
+            Modelo = modelo,
+            Opcionais = opcionais
+        };
+        var result = await _mediator.Send(query);
+        return Ok(result);
+    }
+
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(AtualizarVeiculoResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
