@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.OpenApi.Models;
+using Microsoft.OpenApi;
+
 
 namespace CadastroVeiculos.API.Configurations
 {
@@ -23,19 +24,10 @@ namespace CadastroVeiculos.API.Configurations
                     Type = SecuritySchemeType.Http,
                     Scheme = JwtBearerDefaults.AuthenticationScheme,
                     Description = "Informe **_SOMENTE_** o seu JWT Bearer token na caixa de texto abaixo!",
-
-                    Reference = new OpenApiReference
-                    {
-                        Id = JwtBearerDefaults.AuthenticationScheme,
-                        Type = ReferenceType.SecurityScheme
-                    }
                 };
 
                 option.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, jwtSecurityScheme);
-                option.AddSecurityRequirement(new OpenApiSecurityRequirement
-                {
-                    { jwtSecurityScheme, Array.Empty<string>() }
-                });
+                
             });
         }
     }
