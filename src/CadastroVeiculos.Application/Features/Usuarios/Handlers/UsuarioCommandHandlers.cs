@@ -96,7 +96,7 @@ public class ExcluirUsuarioHandler : IRequestHandler<ExcluirUsuarioCommand, bool
 
         if (usuario.Login == "admin")
         {
-            return false;
+            throw new InvalidOperationException($"Não é possível excluir o usuário 'admin'");
         }
 
         await _usuarioService.Delete(usuario);
