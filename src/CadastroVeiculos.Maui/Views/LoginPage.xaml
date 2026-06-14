@@ -65,9 +65,12 @@
                                 Stroke="{StaticResource Gray200}"
                                 Padding="12,8"
                                 BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray900}}">
-                            <Entry Text="{Binding Login}"
+                            <Entry x:Name="EntryLogin"
+                                   Text="{Binding Login}"
                                    Placeholder="Seu login"
-                                   Keyboard="Default" />
+                                   Keyboard="Default"
+                                   ReturnType="Next"
+                                   Completed="EntryLogin_Completed" />
                         </Border>
                     </VerticalStackLayout>
 
@@ -78,9 +81,22 @@
                                 Stroke="{StaticResource Gray200}"
                                 Padding="12,8"
                                 BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray900}}">
-                            <Entry Text="{Binding Senha}"
-                                   Placeholder="Sua senha"
-                                   IsPassword="True" />
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Entry x:Name="EntrySenha"
+                                       Text="{Binding Senha}"
+                                       Placeholder="Sua senha"
+                                       IsPassword="{Binding MostrarSenha, Converter={StaticResource InverseBoolConverter}}"
+                                       ReturnType="Go"
+                                       ReturnCommand="{Binding EntrarCommand}"
+                                       Grid.Column="0" />
+                                <Button Text="👁"
+                                        Command="{Binding ToggleMostrarSenhaCommand}"
+                                        BackgroundColor="Transparent"
+                                        TextColor="{StaticResource Gray500}"
+                                        Padding="8,0"
+                                        WidthRequest="40"
+                                        Grid.Column="1" />
+                            </Grid>
                         </Border>
                     </VerticalStackLayout>
 

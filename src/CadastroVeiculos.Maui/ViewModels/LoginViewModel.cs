@@ -35,6 +35,9 @@ public partial class LoginViewModel : ObservableObject
     [ObservableProperty]
     public partial bool Carregando { get; set; }
 
+    [ObservableProperty]
+    public partial bool MostrarSenha { get; set; }
+
     [RelayCommand]
     private async Task Entrar()
     {
@@ -88,5 +91,11 @@ public partial class LoginViewModel : ObservableObject
     private async Task IrParaCadastro()
     {
         await Shell.Current.GoToAsync("//cadastro");
+    }
+
+    [RelayCommand]
+    private void ToggleMostrarSenha()
+    {
+        MostrarSenha = !MostrarSenha;
     }
 }
