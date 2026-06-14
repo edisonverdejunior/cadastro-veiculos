@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CadastroVeiculos.Maui.ViewModels"
+             x:Class="CadastroVeiculos.Maui.Views.CadastroPage"
+             x:DataType="vm:CadastroViewModel"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource Gray100}">
+
+    <ScrollView>
+        <VerticalStackLayout Spacing="0" VerticalOptions="Center" Padding="24">
+
+            <!-- Header -->
+            <Frame BackgroundColor="{StaticResource Primary}"
+                   CornerRadius="16"
+                   Padding="24"
+                   Margin="0,0,0,24"
+                   HasShadow="True"
+                   BorderColor="Transparent">
+                <VerticalStackLayout Spacing="8" HorizontalOptions="Center">
+                    <Label Text="&#x1F697;"
+                           FontSize="48"
+                           HorizontalOptions="Center" />
+                    <Label Text="Criar Conta"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="White"
+                           HorizontalOptions="Center" />
+                    <Label Text="Preencha os dados para se cadastrar"
+                           FontSize="14"
+                           TextColor="#FFFFFFCC"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Frame>
+
+            <!-- Form Card -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="16"
+                   Padding="24"
+                   HasShadow="True"
+                   BorderColor="Transparent">
+                <VerticalStackLayout Spacing="16">
+
+                    <Label Text="Cadastro"
+                           FontSize="24"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource Gray900}"
+                           HorizontalOptions="Center" />
+
+                    <!-- Error -->
+                    <Frame BackgroundColor="#FEE2E2"
+                           CornerRadius="8"
+                           Padding="12"
+                           BorderColor="#FECACA"
+                           IsVisible="{Binding Erro, Converter={StaticResource StringToBoolConverter}}">
+                        <Label Text="{Binding Erro}"
+                               TextColor="#DC2626"
+                               FontSize="13" />
+                    </Frame>
+
+                    <!-- Success -->
+                    <Frame BackgroundColor="#DCFCE7"
+                           CornerRadius="8"
+                           Padding="12"
+                           BorderColor="#BBF7D0"
+                           IsVisible="{Binding Sucesso, Converter={StaticResource StringToBoolConverter}}">
+                        <Label Text="{Binding Sucesso}"
+                               TextColor="#16A34A"
+                               FontSize="13" />
+                    </Frame>
+
+                    <!-- Nome -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Nome" FontSize="13" TextColor="{StaticResource Gray600}" />
+                        <Border StrokeShape="RoundRectangle 8"
+                                Stroke="{StaticResource Gray200}"
+                                Padding="12,8"
+                                BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray900}}">
+                            <Entry Text="{Binding Nome}"
+                                   Placeholder="Seu nome completo" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Login -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Login" FontSize="13" TextColor="{StaticResource Gray600}" />
+                        <Border StrokeShape="RoundRectangle 8"
+                                Stroke="{StaticResource Gray200}"
+                                Padding="12,8"
+                                BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray900}}">
+                            <Entry Text="{Binding Login}"
+                                   Placeholder="Escolha um login" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Senha -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Senha" FontSize="13" TextColor="{StaticResource Gray600}" />
+                        <Border StrokeShape="RoundRectangle 8"
+                                Stroke="{StaticResource Gray200}"
+                                Padding="12,8"
+                                BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray900}}">
+                            <Entry Text="{Binding Senha}"
+                                   Placeholder="Minimo 6 caracteres"
+                                   IsPassword="True" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Submit button -->
+                    <Button Text="{Binding Carregando, Converter={StaticResource LoadingTextCadastroConverter}}"
+                            Command="{Binding CadastrarCommand}"
+                            IsEnabled="{Binding Carregando, Converter={StaticResource InverseBoolConverter}}"
+                            BackgroundColor="{StaticResource Primary}"
+                            TextColor="White"
+                            FontAttributes="Bold"
+                            CornerRadius="8"
+                            HeightRequest="48"
+                            Margin="0,8,0,0" />
+
+                    <!-- Login link -->
+                    <HorizontalStackLayout HorizontalOptions="Center" Spacing="4">
+                        <Label Text="Ja tem conta?"
+                               FontSize="13"
+                               TextColor="{StaticResource Gray500}"
+                               VerticalOptions="Center" />
+                        <Label Text="Faca login"
+                               FontSize="13"
+                               TextColor="{StaticResource Primary}"
+                               FontAttributes="Bold"
+                               VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding IrParaLoginCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </HorizontalStackLayout>
+
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

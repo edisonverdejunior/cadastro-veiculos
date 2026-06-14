@@ -1,0 +1,21 @@
+<?xml version = "1.0" encoding = "UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:CadastroVeiculos.Maui"
+             xmlns:converters="clr-namespace:CadastroVeiculos.Maui.Converters"
+             x:Class="CadastroVeiculos.Maui.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <converters:InverseBoolConverter x:Key="InverseBoolConverter" />
+            <converters:StringToBoolConverter x:Key="StringToBoolConverter" />
+            <converters:LoadingTextConverter x:Key="LoadingTextConverter" DefaultText="Entrar" LoadingText="Entrando..." />
+            <converters:LoadingTextConverter x:Key="LoadingTextCadastroConverter" DefaultText="Cadastrar" LoadingText="Cadastrando..." />
+            <converters:LoadingTextConverter x:Key="LoadingTextSalvarConverter" DefaultText="Salvar" LoadingText="Salvando..." />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

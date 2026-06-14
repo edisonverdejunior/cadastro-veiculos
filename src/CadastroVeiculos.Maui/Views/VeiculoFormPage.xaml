@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CadastroVeiculos.Maui.ViewModels"
+             x:Class="CadastroVeiculos.Maui.Views.VeiculoFormPage"
+             x:DataType="vm:VeiculoFormViewModel"
+             Title="{Binding Titulo}"
+             BackgroundColor="{StaticResource Gray100}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="16">
+
+            <!-- Form Card -->
+            <Frame BackgroundColor="White"
+                   CornerRadius="16"
+                   Padding="24"
+                   HasShadow="True"
+                   BorderColor="Transparent">
+                <VerticalStackLayout Spacing="16">
+
+                    <Label Text="{Binding Titulo}"
+                           FontSize="22"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource Gray900}" />
+
+                    <!-- Error -->
+                    <Frame BackgroundColor="#FEE2E2"
+                           CornerRadius="8"
+                           Padding="12"
+                           BorderColor="#FECACA"
+                           IsVisible="{Binding Erro, Converter={StaticResource StringToBoolConverter}}">
+                        <Label Text="{Binding Erro}" TextColor="#DC2626" FontSize="13" />
+                    </Frame>
+
+                    <!-- Descricao -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Descricao *" FontSize="13" TextColor="{StaticResource Gray600}" />
+                        <Border StrokeShape="RoundRectangle 8" Stroke="{StaticResource Gray200}" Padding="12,8" BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray900}}">
+                            <Entry Text="{Binding Descricao}" Placeholder="Ex: Sedan Executivo 2024" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Marca -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Marca *" FontSize="13" TextColor="{StaticResource Gray600}" />
+                        <Border StrokeShape="RoundRectangle 8" Stroke="{StaticResource Gray200}" Padding="12,4" BackgroundColor="White">
+                            <Picker ItemsSource="{Binding Marcas}"
+                                    SelectedItem="{Binding MarcaSelecionada}"
+                                    Title="Selecione a marca" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Modelo -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Modelo *" FontSize="13" TextColor="{StaticResource Gray600}" />
+                        <Border StrokeShape="RoundRectangle 8" Stroke="{StaticResource Gray200}" Padding="12,8" BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray900}}">
+                            <Entry Text="{Binding Modelo}" Placeholder="Ex: Corolla XEi" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Opcionais -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Opcionais" FontSize="13" TextColor="{StaticResource Gray600}" />
+                        <Border StrokeShape="RoundRectangle 8" Stroke="{StaticResource Gray200}" Padding="12,8" BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray900}}">
+                            <Entry Text="{Binding Opcionais}" Placeholder="Ex: Ar condicionado, Direcao hidraulica" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Valor -->
+                    <VerticalStackLayout Spacing="4">
+                        <Label Text="Valor" FontSize="13" TextColor="{StaticResource Gray600}" />
+                        <Border StrokeShape="RoundRectangle 8" Stroke="{StaticResource Gray200}" Padding="12,8" BackgroundColor="{AppThemeBinding Light=White, Dark={StaticResource Gray900}}">
+                            <Entry Text="{Binding Valor}" Placeholder="Ex: 85000.00" Keyboard="Numeric" />
+                        </Border>
+                    </VerticalStackLayout>
+
+                    <!-- Buttons -->
+                    <Grid ColumnDefinitions="*,*" ColumnSpacing="12" Margin="0,8,0,0">
+                        <Button Text="Voltar"
+                                BackgroundColor="{StaticResource Gray200}"
+                                TextColor="{StaticResource Gray600}"
+                                CornerRadius="8"
+                                HeightRequest="48"
+                                Command="{Binding VoltarCommand}" />
+                        <Button Grid.Column="1"
+                                Text="{Binding Carregando, Converter={StaticResource LoadingTextSalvarConverter}}"
+                                BackgroundColor="{StaticResource Primary}"
+                                TextColor="White"
+                                FontAttributes="Bold"
+                                CornerRadius="8"
+                                HeightRequest="48"
+                                IsEnabled="{Binding Carregando, Converter={StaticResource InverseBoolConverter}}"
+                                Command="{Binding SalvarCommand}" />
+                    </Grid>
+
+                </VerticalStackLayout>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

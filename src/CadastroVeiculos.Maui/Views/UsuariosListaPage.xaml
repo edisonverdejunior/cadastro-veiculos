@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:CadastroVeiculos.Maui.ViewModels"
+             xmlns:models="clr-namespace:CadastroVeiculos.Maui.Models"
+             x:Class="CadastroVeiculos.Maui.Views.UsuariosListaPage"
+             x:DataType="vm:UsuariosListaViewModel"
+             Title="Usuarios"
+             BackgroundColor="{StaticResource Gray100}">
+
+    <Grid RowDefinitions="Auto,*">
+
+        <!-- Header -->
+        <VerticalStackLayout Grid.Row="0" Padding="16,16,16,0" Spacing="12">
+            <Label Text="Usuarios"
+                   FontSize="22"
+                   FontAttributes="Bold"
+                   TextColor="{StaticResource Gray900}" />
+
+            <!-- Error -->
+            <Frame BackgroundColor="#FEE2E2"
+                   CornerRadius="8"
+                   Padding="12"
+                   BorderColor="#FECACA"
+                   IsVisible="{Binding Erro, Converter={StaticResource StringToBoolConverter}}">
+                <Label Text="{Binding Erro}" TextColor="#DC2626" FontSize="13" />
+            </Frame>
+        </VerticalStackLayout>
+
+        <!-- Loading -->
+        <ActivityIndicator Grid.Row="1"
+                           IsRunning="{Binding Carregando}"
+                           IsVisible="{Binding Carregando}"
+                           HorizontalOptions="Center"
+                           VerticalOptions="Center"
+                           Color="{StaticResource Primary}" />
+
+        <!-- User list -->
+        <CollectionView Grid.Row="1"
+                        ItemsSource="{Binding Usuarios}"
+                        IsVisible="{Binding Carregando, Converter={StaticResource InverseBoolConverter}}"
+                        Margin="16,12,16,0">
+
+            <CollectionView.EmptyView>
+                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="8" Padding="24">
+                    <Label Text="&#x1F465;" FontSize="48" HorizontalOptions="Center" />
+                    <Label Text="Nenhum usuario encontrado"
+                           FontSize="16"
+                           TextColor="{StaticResource Gray400}"
+                           HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </CollectionView.EmptyView>
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:UsuarioResponse">
+                    <Frame BackgroundColor="White"
+                           CornerRadius="12"
+                           Padding="16"
+                           Margin="0,0,0,10"
+                           HasShadow="True"
+                           BorderColor="Transparent">
+                        <Grid ColumnDefinitions="*,Auto">
+
+                            <VerticalStackLayout Spacing="4" VerticalOptions="Center">
+                                <Label Text="{Binding Nome}"
+                                       FontSize="16"
+                                       FontAttributes="Bold"
+                                       TextColor="{StaticResource Gray900}" />
+                                <Label Text="{Binding Login, StringFormat='@{0}'}"
+                                       FontSize="13"
+                                       TextColor="{StaticResource Gray400}" />
+                            </VerticalStackLayout>
+
+                            <!-- Actions -->
+                            <HorizontalStackLayout Grid.Column="1"
+                                                   VerticalOptions="Center"
+                                                   Spacing="8">
+                                <Button Text="&#x270F;"
+                                        BackgroundColor="#DBEAFE"
+                                        TextColor="{StaticResource Primary}"
+                                        CornerRadius="8"
+                                        FontSize="14"
+                                        HeightRequest="36"
+                                        WidthRequest="36"
+                                        Padding="0"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:UsuariosListaViewModel}}, Path=EditarCommand}"
+                                        CommandParameter="{Binding .}" />
+                                <Button Text="&#x1F5D1;"
+                                        BackgroundColor="#FEE2E2"
+                                        TextColor="#DC2626"
+                                        CornerRadius="8"
+                                        FontSize="14"
+                                        HeightRequest="36"
+                                        WidthRequest="36"
+                                        Padding="0"
+                                        Command="{Binding Source={RelativeSource AncestorType={x:Type vm:UsuariosListaViewModel}}, Path=ExcluirCommand}"
+                                        CommandParameter="{Binding .}" />
+                            </HorizontalStackLayout>
+
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+    </Grid>
+
+</ContentPage>
