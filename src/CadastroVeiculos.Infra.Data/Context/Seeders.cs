@@ -5,7 +5,7 @@ namespace CadastroVeiculos.Infra.Data.Context
 {
     public static class Seeders
     {
-        public static void SeedInMemoryData(this CadastroVeiculosContext context)
+        public static void SeedData(this CadastroVeiculosContext context)
         {
             SeedUsuarios(context);
             SeedVeiculos(context);
@@ -15,6 +15,9 @@ namespace CadastroVeiculos.Infra.Data.Context
 
         private static void SeedVeiculos(CadastroVeiculosContext context)
         {
+            if (context.Veiculos.Any())
+                return;
+
             var veiculos = new List<Veiculo>
             {
                 new() 

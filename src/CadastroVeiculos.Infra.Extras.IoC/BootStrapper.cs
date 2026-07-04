@@ -9,16 +9,17 @@ using CadastroVeiculos.Infra.Extras.UoW;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace CadastroVeiculos.Infra.Extras.IoC
 {
     public static class BootStrapper
     {
-        public static void RegisterAllDependencies(this IServiceCollection services)
+        public static void RegisterAllDependencies(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            RegisterContext(services);
+            RegisterContext(services, configuration);
             RegisterDomainServices(services);
             RegisterRepositories(services);
             RegisterValidators(services);
@@ -38,9 +39,10 @@ namespace CadastroVeiculos.Infra.Extras.IoC
             services.AddScoped<IVeiculoRepository, VeiculoRepository>();
         }
 
-        private static void RegisterContext(IServiceCollection services)
+        private static void RegisterContext(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddDbContext<CadastroVeiculosContext>(options => options.UseInMemoryDatabase("CadastroVeiculosDb"));
+            services.AddDbContext<CadastroVeiculosContext>(options => 
+                options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
         }
 
         private static void RegisterValidators(IServiceCollection services)

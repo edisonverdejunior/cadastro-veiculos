@@ -3,6 +3,7 @@ using CadastroVeiculos.API.Middlewares;
 using CadastroVeiculos.Infra.Data.Context;
 using CadastroVeiculos.Infra.Extras.IoC;
 using CadastroVeiculos.Infra.Extras.JWT;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +14,7 @@ builder.Services.AddSwaggerConfiguration();
 builder.Services.AddJwtAuthentication();
 builder.Services.AddAuthorization();
 
-builder.Services.RegisterAllDependencies();
+builder.Services.RegisterAllDependencies(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
@@ -31,7 +32,8 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<CadastroVeiculosContext>();
-    context.SeedInMemoryData();
+    context.Database.Migrate();
+    context.SeedData();
 }
 
 // Configure the HTTP request pipeline.
