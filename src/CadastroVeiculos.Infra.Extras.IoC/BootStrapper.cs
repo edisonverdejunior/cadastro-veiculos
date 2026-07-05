@@ -31,12 +31,15 @@ namespace CadastroVeiculos.Infra.Extras.IoC
             services.AddScoped<IVeiculoService, VeiculoService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
             services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IMfaService, MfaService>();
+            services.AddScoped<IMfaRecoveryCodeService, MfaRecoveryCodeService>();
         }
 
         private static void RegisterRepositories(IServiceCollection services)
         {
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IVeiculoRepository, VeiculoRepository>();
+            services.AddScoped<IMfaRecoveryCodeRepository, MfaRecoveryCodeRepository>();
         }
 
         private static void RegisterContext(IServiceCollection services, IConfiguration configuration)

@@ -1,4 +1,6 @@
-﻿using CadastroVeiculos.Application.Features.Usuarios.Commands;
+﻿using System.Security.Claims;
+using CadastroVeiculos.Application.Features.Mfa.Commands;
+using CadastroVeiculos.Application.Features.Usuarios.Commands;
 using CadastroVeiculos.Application.Features.Usuarios.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -111,6 +113,33 @@ public class UsuariosController : ControllerBase
             var command = new ExcluirUsuarioCommand { Id = id };
             await _mediator.Send(command);
             return NoContent();
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+    }
+
+    /// <summary>
+    /// Reset administrativo de MFA: desabilita o MFA de um usuário (recuperação em caso
+    /// de perda do app autenticador e dos códigos). Permitido apenas ao usuário "admin".
+    /// </summary>
+    [HttpPost("{id}/mfa/reset")]
+    [Authorize]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> ResetMfa(Guid id)
+    {
+        try
+        {
+            var solicitante = User.FindFirstValue("login") ?? User.FindFirstValue(ClaimTypes.Name) ?? string.Empty;
+            await _mediator.Send(new ResetMfaCommand { SolicitanteLogin = solicitante, UsuarioId = id });
+            return NoContent();
+        }
+        catch (UnauthorizedAccessException ex)
+        {
+            return StatusCode(StatusCodes.Status403Forbidden, new { message = ex.Message });
         }
         catch (KeyNotFoundException)
         {

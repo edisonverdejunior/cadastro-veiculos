@@ -26,6 +26,16 @@ public class LoginHandler : IRequestHandler<LoginQuery, LoginResponse>
         if (usuario == null || !BCrypt.Net.BCrypt.Verify(request.Senha, usuario.Senha))
             throw new UnauthorizedAccessException("Login ou senha inválidos");
 
+        // 2º fator habilitado: não emite o token final; devolve um pré-auth token curto.
+        if (usuario.MfaEnabled)
+        {
+            return new LoginResponse
+            {
+                MfaRequired = true,
+                MfaToken = _authService.GeneratePreAuthToken(usuario.Id, usuario.Login)
+            };
+        }
+
         var token = _authService.GenerateToken(usuario.Id, usuario.Login);
 
         return new LoginResponse
